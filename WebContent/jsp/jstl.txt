@@ -1,0 +1,67 @@
+<input id="fname" name="fname"  value="${command.userName}" type="text" placeholder="First Name" class="form-control">
+
+		<form:textarea path="productDesc" cols="35" rows="3"/> 
+
+
+ <c:set var="msgTag" value=""/>  
+ <c:if test="${not empty step}">
+   <c:set var="pstep" scope="session" value="${step}"/>
+	<c:choose>
+	    <c:when test="${pstep==1}">
+	        <button type="button" class="btn btn-primary  btn-circle">1</button>
+            <p>ตะกร้าสินค้า</p>
+	    </c:when>
+	     <c:when test="${pstep==2}">
+	        Salary is very good.
+	    </c:when>
+	    <c:otherwise>
+	        No comment sir...
+	    </c:otherwise>
+	</c:choose>
+ </c:if>
+  <c:if test="${empty step}">
+ 
+ </c:if>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  <c:set var="msgStep1" value=""/>  
+ <c:set var="msgStep2" value=""/>  
+ <c:set var="msgStep3" value=""/>  
+ <c:set var="tagDisable1" value=""/>
+ <c:set var="tagDisable2" value=""/>
+ <c:set var="tagDisable3" value=""/>
+ 
+ <c:if test="${not empty step}">
+   <c:set var="pStep" scope="session" value="${step}"/>
+	<c:choose>
+	    <c:when test="${pStep==1}">
+	         <c:set var="msgStep1" value="btn btn-primary  btn-circle"/>   
+	    </c:when>
+	    <c:otherwise>
+	       <c:set var="msgStep1" value="btn btn-default btn-circle"/>  
+	    </c:otherwise>
+	</c:choose>
+	<c:choose>
+	    <c:when test="${pStep==2}">
+	        <c:set var="msgStep2" value="btn btn-primary  btn-circle"/>   
+	    </c:when>
+	    <c:otherwise>
+	       <c:set var="msgStep2" value="btn btn-default btn-circle"/>  
+	    </c:otherwise>
+	</c:choose>	
+	<c:choose>
+	    <c:when test="${pStep==3}">
+	       <c:set var="msgStep3" value="btn btn-primary  btn-circle"/>   
+	    </c:when>
+	    <c:otherwise>
+	       <c:set var="msgStep3" value="btn btn-default btn-circle"/>  
+	    </c:otherwise>
+	</c:choose>	
+ </c:if>
+ 
+ 
