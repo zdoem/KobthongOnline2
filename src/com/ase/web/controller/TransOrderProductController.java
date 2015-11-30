@@ -568,8 +568,7 @@ public class TransOrderProductController {
 				custObj.setMobile(chgCustForm.getMobile());
 				
 				int updCust = usrService.UpdateCustomer(conn, custObj);
-				System.out.println("-->updCust :"+updCust);
-				
+				System.out.println("-->updCust :"+updCust);			
 				
 				CustomerAddress addressObj = new CustomerAddress();
 				addressObj.setAddressDesc(chgCustForm.getAddressDesc());
@@ -581,7 +580,7 @@ public class TransOrderProductController {
 				System.out.println("-->after generate INVOID_ID:"+INVOICE_ID);	
 			   	
 				TransOrderProduct transOrderService = new TransOrderProductImpl();			     		
-			   	int Ins = transOrderService.InsertTransOrder(conn, arrList, INVOICE_ID);
+			   	int Ins = transOrderService.InsertTransOrder(conn, arrList, INVOICE_ID,chgCustForm.getCustomerId(),Integer.parseInt(addressObj.getAddressId()),1);
 			   	
 			   	if(Ins == -1){//rollback
 			   		Common.rollbackTransaction(conn); 
@@ -775,7 +774,88 @@ public class TransOrderProductController {
 		 }
      }
 	
+
+	@RequestMapping(value = "/orderStatusList") //, method = RequestMethod.GET,POST
+	public ModelAndView doOrdderStatusListAction(HttpServletRequest request)  {
+
+		Connection conn = null;
+		String forward = "";
+		try{		
+				System.out.println("--->Order  orderProductList.html");
+				printOutParam(request);
+
+				/**************
+				* Verify Login or Require Login Only
+				/**************/
+				 HttpSession session = request.getSession(false); 
+				//session check login			   
+				if(Utilize.verifyLogin(session)){
+				   //case Not login
+					forward =  "redirect:/login.html";
+					System.out.println("========XXXXXXXXXXXXXXXXXXXXXXXXx Login.html");
+					return new ModelAndView(forward);
+				}
+				Object oby = new Object();			    						
+				ArrayList arrList = new ArrayList();
+			   	try{
+			   		oby = session.getAttribute(Constant.SS_ARR_ORDERLIST);//arrOrderList
+			     	arrList = (ArrayList)oby; 
+			   	}catch(Exception e){
+				    System.out.println("<<------------Exception View");
+		    	}  					
+				//*********************************************		
+			   	if(arrList!=null && arrList.size()>0){
+			   		System.out.println("============XXXXXXXXXXXXXXXXXXXXXXXXXXXXXx====================");
+			   	}else{
+			   		arrList= new ArrayList();
+			   		System.out.println("============TTTTTTTTTTTTTTTTTTTTTTT====================");
+			   	}
+			   	/********** Connection DB *************/
+				conn = Common.open();
+				Common.defaultTransaction(conn);
+				/********** Connection DB *************/
+				
+				/*******New Object ****************/
+				MasterProductType productTypeService = new MasterProductTypeImpl();
+			   	List productTypeList =  productTypeService.listProductType(conn);
+			   	System.out.println("============YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY====================");
+			   	
+			   	forward =  "orderStatusTable"; //orderStatusTable.jsp
+				ModelAndView model = new ModelAndView(forward);
+				model.addObject("productTypeList", productTypeList);
+				model.addObject(Constant.SS_ARR_ORDERLIST,arrList);
+				//model.addObject("msgStep","1");//Step = 1
+				//if(objProduct== null){model.addObject("msg", "ไม่มีรายการสินค้า");}	
+				
+				System.out.println("============XXXXXXXXXXXXXXXXXXXXXXXXXXXXXx:"+arrList.size());
+				Common.close(conn);
+				conn = null;
+				return model;
+			}catch(Exception e){
+			    forward = "error100"; //error100.jsp
+			    System.out.println(clazzName+":"+e.getMessage());
+			    System.out.println(e.toString());
+				 try{
+					 if(conn!=null){
+						Common.close(conn);
+					 }
+					 conn = null;
+				    //Close connection
+				 }catch(Exception ex){}
+				 return new ModelAndView(forward);
+		     }finally{
+				 try{
+					 if(conn!=null){
+						Common.close(conn);
+					 }
+					 conn = null;
+				    //Close connection
+				 }catch(Exception ex){}
+		     }
+	}	
 	
+	
+	//OLD  
 	@RequestMapping("/orderConfirmOld")
 	public ModelAndView doConfirmOrderOldAction(HttpServletRequest request) {
 	
@@ -853,7 +933,7 @@ public class TransOrderProductController {
 				System.out.println("-->after generate INVOID_ID:"+INVOICE_ID);	
 			   	
 				TransOrderProduct transOrderService = new TransOrderProductImpl();			     		
-			   	int Ins = transOrderService.InsertTransOrder(conn, arrNewList, INVOICE_ID);
+			   	int Ins = transOrderService.InsertTransOrder(conn, arrNewList, INVOICE_ID,0,0,0);
 			   	
 			   	if(Ins == -1){//rollback
 			   		Common.rollbackTransaction(conn); 
@@ -909,6 +989,139 @@ public class TransOrderProductController {
 			   }catch(Exception ex){}
 		 }
      }
+	
+	//*********Check Out
+		@RequestMapping(value = "/orderRefresh") //, method = RequestMethod.GET,POST
+		public ModelAndView doOrdderRefreshAction(HttpServletRequest request)  {
+				//productDesc.html?productId=2015102100008		
+				Connection conn = null;
+				String forward = "";
+				try{		
+						System.out.println("===============>Order  orderCheckProduct.html=============");
+						printOutParam(request);
+
+						/**************
+						* Verify Login or Require Login Only
+						/**************/
+						 HttpSession session = request.getSession(false); 
+						//session check login			   
+						if(Utilize.verifyLogin(session)){
+						   //case Not login
+							forward =  "redirect:/login.html";
+							System.out.println("========XXXXXXXXXXXXXXXXXXXXXXXXx Login.html");
+							return new ModelAndView(forward);
+						}
+			
+						Object oby = new Object();			    						
+						ArrayList arrList = new ArrayList();
+					   	try{
+					   		oby = session.getAttribute(Constant.SS_ARR_ORDERLIST);//arrOrderList
+					     	arrList = (ArrayList)oby; 
+					   	}catch(Exception e){
+						    System.out.println("<<------------Exception View");
+				    	}  					
+						//*********************************************		
+						
+					   	/********** Connection DB *************/
+						conn = Common.open();
+						Common.defaultTransaction(conn);
+						/********** Connection DB *************/
+						
+						/*********check duplicate  product */
+						ArrayList arrNewList = new ArrayList();
+						ProductForm objForm = null;			     	
+						if(arrList!=null && arrList.size()>0){
+							System.out.println("==>arrList :"+arrList.size());
+							
+							ProductForm  prod = null;
+						    int i = 0;
+						    String quantity = "";
+						    
+							System.out.println("=========== process.");
+							Iterator it=arrList.iterator();
+						    while(it.hasNext()){
+							    prod =(ProductForm)it.next(); 
+							    quantity = request.getParameter("quantity"+i);    
+							        
+							    System.out.println("==>prod :"+prod.getProductId());
+							    System.out.println("==>quantity :"+quantity);
+							    	
+							    objForm = new ProductForm();
+						        //Set items 
+							    //objForm.setProductItems(5);
+						        objForm.setProductItems(Integer.parseInt(quantity));
+						        objForm.setProductId(prod.getProductId());
+						        objForm.setProductName(prod.getProductName());
+						        objForm.setProductSize(prod.getProductSize());
+						        objForm.setProductDesc(prod.getProductDesc());
+						        objForm.setProductImageName(prod.getProductImageName());
+						        System.out.println("=========== process1111.");
+						        objForm.setProductQuantity(prod.getProductQuantity());
+						        objForm.setProductColor(prod.getProductColor());
+						        objForm.setProductPrice(prod.getProductPrice());
+						        objForm.setProductSale(prod.getProductSale());
+						        objForm.setProductLastUpdate(prod.getProductLastUpdate());
+						        System.out.println("=========== process222.");
+						        objForm.setAdminId(prod.getAdminId());
+						        objForm.setTypeProductId(prod.getTypeProductId());
+						        objForm.setTypeProductName(prod.getTypeProductName());
+						        System.out.println("=========== process3333.");
+						        //arrList.remove(i); //remove old
+						        System.out.println("=========== process444.");
+						        arrNewList.add(objForm);//add new item
+						        System.out.println("=========== process555.");
+						        i++;
+						      }//#While Loop
+						    }//#arrList		     	
+						    System.out.println("8888888888888888.");
+
+							if(arrNewList == null){							
+							    System.out.println("=====New ArrayList.");
+								arrNewList = new ArrayList();				
+							}
+							//arrList.add(objForm);		
+							synchronized(session) {
+								session.removeAttribute(Constant.SS_ARR_ORDERLIST);//remove
+								System.out.println("=========== xxxxxxxxxxxxxxxxxx.");
+							}	
+			       			//session.setAttribute(Constant.SS_ARR_ORDERLIST,arrNewList);//add	
+							System.out.println("=========== process666666.");
+						/*******New Object ****************/
+						MasterProductType productTypeService = new MasterProductTypeImpl();
+					   	List productTypeList =  productTypeService.listProductType(conn);
+					   	
+					   	System.out.println("============Order productForm List=====================");				   	
+					   	forward = "orderProductList"; //orderProductList.html
+						ModelAndView model = new ModelAndView(forward);
+						model.addObject(Constant.SS_ARR_ORDERLIST,arrNewList);
+
+						//if(objProduct== null){model.addObject("msg", "ไม่มีรายการสินค้า");}	
+						
+						Common.close(conn);
+						conn = null;
+						return model;
+					}catch(Exception e){
+					    forward = "error100"; //error100.jsp
+					    System.out.println(clazzName+":"+e.getMessage());
+					    System.out.println(e.toString());
+						 try{
+							 if(conn!=null){
+								Common.close(conn);
+							 }
+							 conn = null;
+						    //Close connection
+						 }catch(Exception ex){}
+						 return new ModelAndView(forward);
+				     }finally{
+						 try{
+							 if(conn!=null){
+								Common.close(conn);
+							 }
+							 conn = null;
+						    //Close connection
+						 }catch(Exception ex){}
+				     }
+				 }
 	
 	
 }

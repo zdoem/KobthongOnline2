@@ -22,11 +22,11 @@
   <hr>
   <li><a href="<c:url value="/login.html"/>">Login</a></li>
   <li><a href="<c:url value="/Logout.html"/>">Logout</a></li>
-
+ <li><a href="<c:url value="/orderStatusList.html"/>">รายการสั่งซื้อ</a></li>
 
   <hr>
     <li><a href="<c:url value="/TypeProductAddForm.dog"/>"><strike>ข้อมูลพื้นฐาน  ประเภทสินค้า</strike></a></li>
-  <li><a href="<c:url value="/TypeProductList.dog"/>"><strike>รายการ ประเภทสินค้า</strike></a></li>
+  
   
    <hr>
    <li><a href="<c:url value="/CustomerAddForm.dog"/>"><strike>ข้อมูลพื้นฐาน  เพิ่มชื่อลูกค้า</strike></a></li>

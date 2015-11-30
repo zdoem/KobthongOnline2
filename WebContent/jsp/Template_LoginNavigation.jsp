@@ -16,19 +16,21 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">ข้อมูลส่วนตัว</a>
+                        <a href="userProfile.html">ข้อมูลส่วนตัว</a>
                     </li>
                     <li>
                         <a href="orderProductList.html">ตะกร้าสินค้า</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="#">ประเภทสินค้า</a>
                     </li>
+                     -->
                     <li>
-                        <a href="#">เกี่ยวกับบริษัท</a>
+                        <a href="companyProfile.html">เกี่ยวกับบริษัท</a>
                     </li>
                     <li>
-                        <a href="#">ติดต่อเรา</a>
+                        <a href="contact.html">ติดต่อเรา</a>
                     </li>
                      <li>
                         <a href="Logout.html">ออกจากระบบ</a>

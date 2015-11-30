@@ -34,7 +34,7 @@ public class MasterProductImpl implements MasterProduct{
 			/******************************************************/	       	
 			sql.delete(0,sql.length());
 			sql.append(" SELECT a.product_id, a.product_name, a.product_size, a.product_desc, a.product_img, ")
-			   .append(" a.product_quantity, a.product_color, a.product_price, a.product_sale, a.product_last_update, a.admin_id,  ")
+			   .append(" a.product_quantity, a.product_unit_type, a.product_color, a.product_price, a.product_sale, a.product_last_update, a.admin_id,  ")
 			   .append(" a.product_type_id,b.product_type_name  ")
 			   .append(" FROM "+Constant.INSTANT_DB_NAME+".product a,"+Constant.INSTANT_DB_NAME+".product_type b ")
 			   .append(" WHERE a.product_type_id = b.product_type_id ")
@@ -59,6 +59,7 @@ public class MasterProductImpl implements MasterProduct{
 				obj.setAdminId(rs.getString("admin_id"));
 				obj.setTypeProductId(rs.getString("product_type_id"));
 				obj.setTypeProductName(rs.getString("product_type_name"));
+				obj.setProductUnitType(rs.getString("product_unit_type"));
 				
 				resultList.add(obj);
 			}
@@ -95,7 +96,7 @@ public class MasterProductImpl implements MasterProduct{
 			/******************************************************/	       	
 			sql.delete(0,sql.length());
 			sql.append(" SELECT a.product_id, a.product_name, a.product_size, a.product_desc, a.product_img, ")
-			   .append(" a.product_quantity, a.product_color, a.product_price, a.product_sale, a.product_last_update, a.admin_id,  ")
+			   .append(" a.product_quantity, a.product_unit_type, a.product_color, a.product_price, a.product_sale, a.product_last_update, a.admin_id,  ")
 			   .append(" a.product_type_id,b.product_type_name  ")
 			   .append(" FROM "+Constant.INSTANT_DB_NAME+".product a,"+Constant.INSTANT_DB_NAME+".product_type b ")
 			   .append(" WHERE a.product_type_id = b.product_type_id ")
@@ -123,6 +124,7 @@ public class MasterProductImpl implements MasterProduct{
 				obj.setAdminId(rs.getString("admin_id"));
 				obj.setTypeProductId(rs.getString("product_type_id"));
 				obj.setTypeProductName(rs.getString("product_type_name"));
+				obj.setProductUnitType(rs.getString("product_unit_type"));
 				
 				resultList.add(obj);
 			}
@@ -158,7 +160,7 @@ public class MasterProductImpl implements MasterProduct{
 		try{
 			sql.delete(0,sql.length());
 			sql.append(" SELECT a.product_id, a.product_name, a.product_size, a.product_desc, a.product_img, ")
-			   .append(" a.product_quantity, a.product_color, a.product_price, a.product_sale, a.product_last_update, a.admin_id,  ")
+			   .append(" a.product_quantity, a.product_unit_type, a.product_color, a.product_price, a.product_sale, a.product_last_update, a.admin_id,  ")
 			   .append(" a.product_type_id,b.product_type_name  ")
 			   .append(" FROM "+Constant.INSTANT_DB_NAME+".product a,"+Constant.INSTANT_DB_NAME+".product_type b ")
 			   .append(" WHERE a.product_type_id = b.product_type_id ")
@@ -184,6 +186,7 @@ public class MasterProductImpl implements MasterProduct{
 					obj.setAdminId(rs.getString("admin_id"));
 					obj.setTypeProductId(rs.getString("product_type_id"));
 					obj.setTypeProductName(rs.getString("product_type_name"));
+					obj.setProductUnitType(rs.getString("product_unit_type"));
 
 				} // End if rs
 				

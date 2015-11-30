@@ -16,6 +16,9 @@ public class Constant {
 	public final static String F_STATUS_PENDING = "P";
 	public final static String F_STATUS_SUCCESS = "S";
 	
+	public final static String USER_TYPE_ADMIN = "admin";
+	public final static String USER_TYPE_USER = "user";
+	
 	
 	//public final static String PATH_KEYS_NSIPS = "D:/tg/scbNSIPS/keys/";
 }

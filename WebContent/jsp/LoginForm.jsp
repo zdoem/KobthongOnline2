@@ -42,8 +42,6 @@
 	        <div class="col-sm-6 col-md-4 col-md-offset-4">
 	            <h1 class="text-center login-title">กรุณา Login เข้าสู่ระบบ</h1>
 	            <div class="account-wall">
-	                <img class="profile-img" src="images/pets.png"
-	                    alt="" >
 
 				<c:if test="${not empty error}">
 					<div class="error"><FONT color="red">${error}</FONT></div>
@@ -55,7 +53,8 @@
 		
 	                <form class="form-signin">
 	               
-	               <input type="text" class="form-control" placeholder="Email" name="userName" value="${command.userName}" required autofocus>
+	               <input type="text" class="form-control" placeholder="Username" name="userName" value="${command.userName}" required autofocus>
+	               </br>
 	               <input type="password" class="form-control" placeholder="Password" name="userPassword"  value="${command.userPassword}" required>
 	                      
 	                <%-- 
@@ -67,20 +66,23 @@
 	                <input type="password" class="form-control" placeholder="Password" path="userPassword"  required>
 	                 <p class="submit"><input type="button" value=" ADD " onclick="javascript:onSAVE();"/>&nbsp;&nbsp;<input type="reset" value=" Reset "/></p>
 	                --%>
-	                
+	                </br>
 	                <button class="btn btn-lg btn-primary btn-block" type="submit">
 	                    Sign in</button>
+	                    <!--  
 	                <label class="checkbox pull-left">
 	                    <input type="checkbox" value="remember-me">
 	                                                     ให้จำฉันในระบบต่อไป
 	                </label>
+	                -->
 	                <%-- 
 	                <a href="#" class="pull-right need-help">Need help? </a>
 	                --%>
 	                <span class="clearfix"></span>
 	                </form>
 	            </div>
-	            <a href="#" class="text-center new-account">สมัครใช้งาน </a>
+	            </br>
+	            <a href="registerForm.html" class="text-center new-account">สมัครสมาชิก </a>
 	        </div>
 	    </div>
 	    

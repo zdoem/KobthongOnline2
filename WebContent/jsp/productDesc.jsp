@@ -109,27 +109,34 @@
 			    <div class="content-wrapper">	
 					<div class="item-container">	
 						<div class="container">	
-							<div class="col-md-12">
-								<div class="product col-md-3 service-image-left">
-			                    
-									<center>
-										<img id="item-display" src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
-									</center>
-								</div>
-								
-								<div class="container service1-items col-sm-2 col-md-2 pull-left">
-									<center>
-										<a id="item-1" class="service1-item">
-											<img src="images/pets.png " alt=""></img>
-										</a>
-										<a id="item-2" class="service1-item">
-											<img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
-										</a>
-										<a id="item-3" class="service1-item">
-											<img src="images/happy.png" alt=""></img>
-										</a>
-									</center>
-								</div>
+							<div class="col-lg-6">
+								<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <c:forEach var="ImageData" items="${ImageDataList}" varStatus="status">
+                                            <c:if test="${status.first}">
+                                                <div class="item active" align="center">
+                                                    <img class="slide-image" src="data:image/jpeg;base64,${ImageData}" alt="">
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${!status.first}">
+                                                <div class="item" align="center">
+                                                    <img class="slide-image" src="data:image/jpeg;base64,${ImageData}" alt="">
+                                                </div>
+                                            </c:if>
+                                        </c:forEach>
+                                    </div>
+                                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
 							</div>
 								
 							<div class="col-md-7">
@@ -143,11 +150,20 @@
 								 -->
 								<hr>
 								<div class="product-price">
-								<strike> ${productForm.productPrice} บาท</strike>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;พิเศษโปรโมชั่น ${productForm.productSale} บาท</div>
+									<c:if test="${productForm.productSale>0}">
+										<p>ราคาปกติ :		
+										<strike> ${productForm.productPrice} บาท</strike>
+										ราคาโปรโมชั่น : ${productForm.productSale} บาท ต่อ ${productForm.productUnitType} 
+										</p>
+									</c:if>
+									<c:if test="${productForm.productSale==0}">
+										<p>ราคาปกติ :		
+										 ${productForm.productPrice} บาท ต่อ ${productForm.productUnitType} 
+										</p>
+									</c:if>
+								</div>
 									<c:if test="${productForm.productQuantity>0}">		
-										<div class="product-stock">มีสินค้าใน Stock</div>
+										<div class="product-stock">มีสินค้าพร้อมจำหน่าย</div>
 									</c:if>
 								<hr>
 								<c:if test="${productForm.productQuantity>0}">

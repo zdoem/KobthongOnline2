@@ -81,15 +81,14 @@
 						<div class="col-sm-6 col-md-4 col-md-offset-4">
 				            <h2 class="text-center login-title"><FONT color="#00CC00">ไม่พบรายการสินค้า</FONT></h2>
 				            <div class="account-wall">
-				                <img class="profile-img" src="images/pets.png"    alt="" >
 				           </div>
 			          </div>
 				</c:if>
 					
-                <c:forEach items="${productListByType}" var="productItems">
+                <c:forEach items="${productListByType}" var="productItems" varStatus="state">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="${productItems.productName}">
+                            <img src="data:image/jpeg;base64,${imageDatas[state.index]}" alt="${productItems.productName}">
                             <div class="caption">
                                 <h5><a href="productDesc.html?productId=${productItems.productId}" >${productItems.productName}</a></h5>
                                 <p>                              
@@ -97,23 +96,10 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ราคาโปรโมชั่น :${productItems.productSale}</div>
                                 </p>
                                 <p>${productItems.productDesc} ... 
-                               <%--
-                               <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.
-                                --%>
+
                                 </p>
                             </div>
-                             <%--  
-                             <div class="ratings">
-                                <p class="pull-right">15 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </p>
-                            </div>                            
-                             --%>
+
 
                             
                         </div>

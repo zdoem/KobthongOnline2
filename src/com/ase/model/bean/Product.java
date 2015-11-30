@@ -8,6 +8,7 @@ public class Product {
 	 private String productDesc;
 	 private String productImageName;
 	 private Integer productQuantity;
+	 private String productUnitType;
 	 private String productColor;	 
 	 private Double productPrice;
 	 private Double productSale;
@@ -104,6 +105,12 @@ public class Product {
 	}
 	public void setTypeProductName(String typeProductName) {
 		this.typeProductName = typeProductName;
+	}
+	public String getProductUnitType() {
+		return productUnitType;
+	}
+	public void setProductUnitType(String productUnitType) {
+		this.productUnitType = productUnitType;
 	}
 	 
 	 

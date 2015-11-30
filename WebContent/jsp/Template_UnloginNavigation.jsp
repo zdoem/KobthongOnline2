@@ -14,18 +14,21 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
+                 <!-- 
+                   <li>
                         <a href="#">ประเภทสินค้า</a>
                     </li>
+                     -->
                     <li>
-                        <a href="register.html">สมัครสมาชิก</a>
+                        <a href="registerForm.html">สมัครสมาชิก</a>
                     </li>
                     <li>
-                        <a href="#">เกี่ยวกับบริษัท</a>
+                        <a href="companyProfile.html">เกี่ยวกับบริษัท</a>
                     </li>
                     <li>
-                        <a href="#">ติดต่อเรา</a>
+                        <a href="contact.html">ติดต่อเรา</a>
                     </li>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

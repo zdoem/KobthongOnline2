@@ -1,5 +1,9 @@
 package com.ase.web.controller;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import com.ase.model.domain.LoginForm;
 import com.ase.model.domain.ProductForm;
 import com.ase.web.util.Constant;
 import com.ase.web.util.Utilize;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 @Controller
 public class ProductController {
@@ -74,11 +79,36 @@ public class ProductController {
 			objProductType = productTypeService.GetProductType(conn, productTypeId);
 			System.out.println("ProductType====="+objProductType.getProductTypeName());
 			
+			List<String> imageDatas = new ArrayList<String>();
+			try {
+					for(int i = 0;i < productListByType.size(); i++){
+					Product product =(Product) productListByType.get(i);
+					String[] ary = product.getProductImageName().split(".jpg");
+					String imagePath = ary[0];
+						System.out.println(imagePath);
+						File file = new File(imagePath + ".jpg");
+						FileInputStream fis = new FileInputStream(file);
+						ByteArrayOutputStream bos = new ByteArrayOutputStream();
+						int b;
+						byte[] buffer = new byte[1024];
+						while ((b = fis.read(buffer)) != -1) {
+							bos.write(buffer, 0, b);
+						}
+						byte[] fileBytes = bos.toByteArray();
+						fis.close();
+						bos.close();
+						imageDatas.add(Base64.encode(fileBytes));
+					}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			/************************************/	
 			forward = "productList"; //home.jsp
 			ModelAndView model = new ModelAndView(forward);
 			model.addObject("productTypeList", productTypeList);
 			model.addObject("productListByType",productListByType);
+			model.addObject("imageDatas", imageDatas);
 			model.addObject("commandType",objProductType);
 			
 			if(productListByType.size()==0){
@@ -123,6 +153,7 @@ public class ProductController {
 			ProductType objProductType = null;
 			
 			ProductForm  productForm = new ProductForm();
+			List<String> imageList = new ArrayList<String>();
 			try{
 				printOutParam(request);
 				//HttpSession session = request.getSession(false);
@@ -156,9 +187,31 @@ public class ProductController {
 					productForm.setAdminId(objProduct.getAdminId());
 					productForm.setTypeProductId(objProduct.getTypeProductId());
 					productForm.setTypeProductName(objProduct.getTypeProductName());
+					productForm.setProductUnitType(objProduct.getProductUnitType());
 					//return new ModelAndView("LoginForm", "command",new LoginForm());					
 				}
 				productTypeList = productTypeService.listProductType(conn);
+				
+				try {
+		            String[] ary = productForm.getProductImageName().split(".jpg");
+		            for (String imagePath : ary) {
+		                System.out.println(imagePath);
+		                File file = new File(imagePath + ".jpg");
+		                FileInputStream fis = new FileInputStream(file);
+		                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		                int b;
+		                byte[] buffer = new byte[1024];
+		                while ((b = fis.read(buffer)) != -1) {
+		                    bos.write(buffer, 0, b);
+		                }
+		                byte[] fileBytes = bos.toByteArray();
+		                fis.close();
+		                bos.close();
+		                imageList.add(Base64.encode(fileBytes));
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
 
 				/************************************/	
 				forward = "productDesc"; //productDesc.jsp
@@ -167,6 +220,7 @@ public class ProductController {
 				model.addObject("productTypeList", productTypeList);
 				//model.addObject("productObj",objProduct); productForm
 				model.addObject("productForm",productForm);
+	            model.addObject("ImageDataList", imageList);
 				model.addObject("productTypeObj",objProductType);
 				
 				if(objProduct== null){

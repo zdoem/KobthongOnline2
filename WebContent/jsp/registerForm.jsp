@@ -34,16 +34,7 @@
 
 	<script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
-     <script type="text/javascript">
-
-		function  doProductList(id){
-		    //document.forms[0].cmd.value="load";	   
-		    document.forms[0].action="<%=request.getContextPath()%>/productList.html?productTypeId="+id;
-		    document.forms[0].submit();
-		}	
-	</script>
-
+    <script type="text/javascript" src="js/validator.js"></script>
 
 </head>
 <body>
@@ -63,8 +54,7 @@
     %>
 
 <!-- Page Content -->
-<form:form method="post" action="loginAuth.html" id="frm" commandName="commandRegForm" >
-    
+   
 <%--###################################3--%>
  <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -89,8 +79,6 @@
         </div>
     </div>
 <%--###################################3--%>
-        
-	
 
 <div class="container">
     <div class="row">
@@ -99,33 +87,54 @@
             <div class="well well-sm">
                 
                     <fieldset>
-                        <legend class="text-center header alert-info">สมัครสมาชิก</legend>
+                         <legend class="text-center header alert alert-info">
+                        
+                        <button class="btn btn-lg btn-primary btn-lg " type="button" id="bntLogin">เข้าใช้งาน</button>
+
+                       <script>
+						$("#bntLogin").click(function () { 
+							//alert("ddd");
+							$('#frm').attr('action', "login.html").submit(); 
+						});
+						</script>
+                         </legend>
+                         
+                         <form:form method="post" action="register.html" id="frm" commandName="commandRegForm" data-toggle="validator" role="form" >
+ 
+                        <legend class="text-center header alert alert-info">สมัครสมาชิก</legend>
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center">&nbsp;ชื่อ Login</span>
                             <div class="col-md-8">
                               <%-- <form:input path="userName" type="text" placeholder="User Name" class="form-control" required autofocus />  ${commandRegForm.userName} --%>                             
-                               <input type="text" class="form-control" placeholder="* Require User Name" name="userName" value="${commandRegForm.userName}" required autofocus>
-
+                               <input type="text" class="form-control" placeholder="* Require User Name" name="userId" value="${commandRegForm.userId}" required autofocus>
+						      <c:if test="${not empty msg}">
+                                <label for="inputName" class="control-label"><FONT color="red">${msg}</FONT></label>
+							</c:if>
                             </div>
+
                         </div>
                         <br> <br>
+		                
 		                
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center">&nbsp;Password </span>
                             <div class="col-md-8">
                               <%--<form:input path="userName" type="password" placeholder="Password" class="form-control" required autofocus /> --%> 
-			                  <input type="password" class="form-control" placeholder="* Require Password" name="userName" value="${commandRegForm.userName}" required autofocus>
-						
+			                  <input type="password" id="inputPassword" data-minlength="6" class="form-control" placeholder="* Require Password" name="password" value="${commandRegForm.password}" required autofocus>
+							 <span class="help-block">Minimum of 6 characters</span>
 
                             </div>
                         </div>	
                          <br> 	
-                         <br>
+
                          <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center">&nbsp;Re Password </span>
                             <div class="col-md-8">
                               <%--<form:input path="userName" type="password" placeholder="Password" class="form-control" required autofocus /> --%> 
-			                  <input type="password" class="form-control" placeholder="* Require Re Password" name="userName" value="${commandRegForm.userName}" required autofocus>
+			                  <input type="password" id="inputPasswordConfirm" data-match="#inputPassword" 
+			                  data-match-error="Whoops, these don't match"   placeholder="* Require Confirm"
+			                  data-minlength="6" class="form-control" 
+			                  name="rePassword" value="${commandRegForm.rePassword}" required autofocus>
 						
 
                             </div>
@@ -138,7 +147,7 @@
                             <span class="col-md-1 col-md-offset-2 text-center">&nbsp;ชื่อ </span>
                             <div class="col-md-8">
                              <%--   <form:input path="userName" type="text" placeholder="First Name" class="form-control" />--%> 
-			                 <input type="text" class="form-control" placeholder="* Require First Name" name="userName" value="${commandRegForm.userName}" required autofocus>
+			                 <input type="text" class="form-control" placeholder="* Require First Name" name="firstName" value="${commandRegForm.firstName}" required autofocus>
 
                             </div>
                         </div>
@@ -147,7 +156,7 @@
                             <span class="col-md-1 col-md-offset-2 text-center">นาสกุล </span>
                             <div class="col-md-8">
                                <%-- <form:input path="userName" type="text" placeholder="Last Name"  class="form-control" />--%> 
-			                  <input type="text" class="form-control" placeholder="* Require Last Name" name="userName" value="${commandRegForm.userName}" required autofocus>
+			                  <input type="text" class="form-control" placeholder="* Require Last Name" name="lastName" value="${commandRegForm.lastName}" required autofocus>
                                
                             </div>
                         </div>
@@ -156,7 +165,7 @@
                             <span class="col-md-1 col-md-offset-2 text-center">E-mail</span>
                             <div class="col-md-8">
                              	<%-- <form:input path="userName" type="text" placeholder="Email Address"  class="form-control" />--%> 
-			                  <input type="text" class="form-control" placeholder="* Require Email Address" name="userName" value="${commandRegForm.userName}" required autofocus>
+			                  <input type="email" id="emailField"  class="form-control" placeholder="* Require Email Address" name="email" value="${commandRegForm.email}" required autofocus>
                             	
                             </div>
                         </div>
@@ -165,7 +174,7 @@
                             <span class="col-md-1 col-md-offset-2 text-center">เบอร์โทร</span>
                             <div class="col-md-8">
                                 <%--  <form:input path="userName" type="text" placeholder="Mobile"  class="form-control" />--%> 
-			                   <input type="text" class="form-control" placeholder="* Require Mobile" name="userName" value="${commandRegForm.userName}" required autofocus>
+			                   <input type="text" class="form-control" placeholder="* Require Mobile" name="mobile" value="${commandRegForm.mobile}" required autofocus>
 
                             </div>
                         </div>
@@ -175,7 +184,7 @@
                             <div class="col-md-8">
       
                                 <%--  <form:textarea path="userName" class="form-control"  placeholder="Enter your Address." rows="7"  cols="35" /> --%> 
-                                <textarea name="userName"  class="form-control"  placeholder="* Require Enter your Address." rows="7"  cols="35"  required autofocus ></textarea>
+                                <textarea name="addressDesc"  class="form-control"  placeholder="* Require Enter your Address." rows="7"  cols="35"  required autofocus >${commandRegForm.addressDesc}</textarea>
                             </div>
                         </div>
 
@@ -193,8 +202,8 @@
                             <div class="col-md-12 text-center">
                           <%-- <button type="button" class="btn btn-primary btn-lg" data-href="orderConfirm.html" data-toggle="modal" data-target="#confirm-delete">ทำรายการต่อ</button> 
                             --%>
-                             <button class="btn btn-lg btn-primary btn-lg " type="submit">Submit</button>
-                             <button class="btn btn-lg btn-primary btn-lg " type="reset">Reset</button>
+                             <button class="btn btn-lg btn-primary btn-lg " type="submit">ยืนยัน</button>
+                             <button class="btn btn-lg btn-primary btn-lg " type="reset">ยกเลิก</button>
                             </div>
                              <%--
 		                             <script>

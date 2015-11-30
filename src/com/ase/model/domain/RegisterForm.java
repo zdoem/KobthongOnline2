@@ -1,14 +1,43 @@
 package com.ase.model.domain;
 
-public class CustomerProfileForm {
+public class RegisterForm {
 	private String customerId;
+	private String userId;
+	private String password;
+	private String rePassword;
 	private String firstName;
 	private String lastName;
 	private String telePhone;
 	private String mobile;
 	private String fax;
 	private String email;
-	private String accountId;
+	private String addressDesc;
+
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRePassword() {
+		return rePassword;
+	}
+	public void setRePassword(String rePassword) {
+		this.rePassword = rePassword;
+	}
+	public String getAddressDesc() {
+		return addressDesc;
+	}
+	public void setAddressDesc(String addressDesc) {
+		this.addressDesc = addressDesc;
+	}
 	//private String accountName;
 	public String getCustomerId() {
 		return customerId;
@@ -52,12 +81,7 @@ public class CustomerProfileForm {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getAccountId() {
-		return accountId;
-	}
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
-	}
+
 
 	
 }

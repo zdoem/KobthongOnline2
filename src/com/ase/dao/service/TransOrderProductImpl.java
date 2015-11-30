@@ -14,7 +14,7 @@ public class TransOrderProductImpl implements TransOrderProduct {
 	static String clazzName = "TransOrderProductImpl";
 	
 	@Override
-	public int InsertTransOrder(Connection conn, List arrList, String INVOID_ID){
+	public int InsertTransOrder(Connection conn, List arrList, String INVOID_ID,int customerId,int addressId,int adminId){
 		StringBuffer sql = new StringBuffer();
 		PreparedStatement pstmt = null;
 		int i = 1;
@@ -66,9 +66,9 @@ public class TransOrderProductImpl implements TransOrderProduct {
 	   		  	pstmt.setInt(i++, quantity);//order_sum_item
 	   		    //order_create_date
 	   		    //order_last_update
-	   		  	pstmt.setInt(i++,1);//customer_id
-	   		  	pstmt.setInt(i++,2);//address_id
-	   		  	pstmt.setInt(i++,3);//admin_id	   		  	
+	   		  	pstmt.setInt(i++,customerId);//customer_id
+	   		  	pstmt.setInt(i++,addressId);//address_id
+	   		  	pstmt.setInt(i++,adminId);//admin_id	   		  	
 	   		  	int countRow = pstmt.executeUpdate();
 	   		  	
 	   			if(countRow == 0){

@@ -64,11 +64,7 @@
                 <c:forEach items="${productTypeList}" var="item">
                       <a href="javascript:doProductList('${item.productTypeId}')" class="list-group-item">${item.productTypeName}</a>
                 </c:forEach>
-                <!--   
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
-                 -->
+
                 </div>
             </div>
 
@@ -85,13 +81,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="images/Promotion.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="images/Banner.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="images/ListName.jpg" alt="">
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -107,12 +103,11 @@
 
                 <div class="row">
 
-                <c:forEach items="${productList}" var="productItems">
+                <c:forEach items="${productList}" var="productItems" varStatus="state">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="${productItems.productName}">
+                            <img src="data:image/jpeg;base64,${imageDatas[state.index]}" height="150" alt="${productItems.productName}">
                             <div class="caption">
-                                <h4 class="pull-right">${productItems.productSale}</h4>
                                 <h4><a href="productDesc.html?productId=${productItems.productId}" >${productItems.productName}</a></h4>
                                 <p>${productItems.productDesc} ... 
                                <%-- 

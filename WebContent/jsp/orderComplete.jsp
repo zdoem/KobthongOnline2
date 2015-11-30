@@ -89,10 +89,10 @@
           -->              
              <div class="col-md-7">
 					
-				       <div class="account-wall ">
-				        <img class="profile-img" src="images/success.png"  width="100px"  height="100px"  alt="" >
+				       <div class="account-wall " style="text-align:center">
+				       
 				       <h4 class="alert alert-success">
-				       ทำรายการสั่งซื้อเรียบร้อยแล้ว..</h4>
+				      <img class="profile-img" src="images/success.png"  width="100px"  height="100px"  alt="" >  ทำรายการสั่งซื้อเรียบร้อยแล้ว..</h4>
 				       </div>
 				       <hr>
 				       <div class="account-wall ">
